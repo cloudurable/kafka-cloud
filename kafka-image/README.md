@@ -25,6 +25,7 @@ Run standalone for testing.
 ```sh
 docker run  -d  -e KAFKA_CLUSTER_MODE=standalone \
       -p 2181:2181 -p 9092:9092 \
+      --entrypoint=/bin/bash \
       cloudurable/kafka-image
 ```
 
@@ -77,7 +78,7 @@ docker run  -d  -e KAFKA_CLUSTER_MODE=standalone \
 version: '3'
 services:
   zookeeper0:
-    image: "cloudurable/zookeeper-image:0.2"
+    image: "cloudurable/zookeeper-image:0.3"
     restart: always
     ports:
      - "2181:2181"
@@ -85,17 +86,40 @@ services:
      - ENSEMBLE=zookeeper0,zookeeper1,zookeeper2
      - MY_ID=1
   zookeeper1:
-    image: "cloudurable/zookeeper-image:0.2"
+    image: "cloudurable/zookeeper-image:0.3"
     restart: always
+    ports:
+     - "2182:2181"
     environment:
      - ENSEMBLE=zookeeper0,zookeeper1,zookeeper2
      - MY_ID=2
   zookeeper2:
-    image: "cloudurable/zookeeper-image:0.2"
+    image: "cloudurable/zookeeper-image:0.3"
     restart: always
+    ports:
+     - "2183:2181"
     environment:
      - ENSEMBLE=zookeeper0,zookeeper1,zookeeper2
      - MY_ID=3
+  kafka0:
+    image: "cloudurable/kafka-image"
+    restart: always
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    ports:
+     - "9092:9092"
+    links:
+     - zookeeper0
+     - zookeeper1
+     - zookeeper2
+    environment:
+     - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+     - KAFKA_BROKER_ID=1
+     - KAFKA_CLUSTER_MODE=auto
+     - KAFKA_LISTENERS=PLAINTEXT://kafka0:9092
+     - KAFKA_DEFAULT_REPLICATION=1
 ```
 
 
