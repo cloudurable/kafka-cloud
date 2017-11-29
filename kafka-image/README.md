@@ -6,14 +6,34 @@ Apache Kafka provides ...
 
 # How to use this image
 
+TBD
+
 ## Run
+
+Run the 9th server / broker in a cluster.
+
 ```sh
-docker run --name kafka \
-  -p 2181:2181 \
-  --restart always \
-  -e ENSEMBLE=zoo1,hostzoo2,zookeeper3 \ TBD
-  cloudurable/kafka-image:0.1 \
-  /opt/zookeeper/bin/run.sh
+docker run  -d \
+    -e KAFKA_BROKER_ID=9  \
+    -e KAFKA_CLUSTER_MODE=auto \
+    -e KAFKA_ZOOKEEPER_CONNECT=zk0.cloudurable.com::2181,zk1.cloudurable.com::2181,zk2.cloudurable.com::2181 \
+    cloudurable/kafka-image
+```
+
+Run standalone for testing.
+
+```sh
+docker run  -d  -e KAFKA_CLUSTER_MODE=standalone \
+      -p 2181:2181 -p 9092:9092 \
+      cloudurable/kafka-image
+```
+
+Run standalone for testing.
+
+```sh
+docker run  -d  -e KAFKA_CLUSTER_MODE=standalone \
+      --restart always --net=host \
+      cloudurable/kafka-image
 ```
 
 
@@ -22,6 +42,8 @@ docker run --name kafka \
 
 ```sh
       "changes": [
+          "ENV KAFKA_CLUSTER_MODE standalone",
+          "ENV KAFKA_DEFAULT_REPLICATION 3",
           "ENV KAFKA_BROKER_ID 1",
           "ENV KAFKA_LOG_DIRS /opt/kafka/data",
           "ENV KAFKA_PORT 9092",

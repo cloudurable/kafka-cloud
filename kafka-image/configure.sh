@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 rm -rf opt/kafka/bin/windows
-rm opt/kafka/config/zookeeper.properties
 rm opt/kafka/config/server.properties
 
 
@@ -52,6 +51,26 @@ LOG_DIRS=\$(echo \$KAFKA_LOG_DIRS | sed 's/\//\\\\\\//g')
 echo "Modifying config file \$CFG_FILE for log dirs \$LOG_DIRS"
 sed  -i  "s/log.dirs=\/tmp\/kafka-logs/log.dirs=\$LOG_DIRS/g" \$CFG_FILE
 
+if [ "x_\$KAFKA_CLUSTER_MODE" == "x_auto" ]
+then
+    export KAFKA_NUM_PARTITIONS=\$KAFKA_DEFAULT_REPLICATION
+    export KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=\$KAFKA_DEFAULT_REPLICATION
+    export KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=\$KAFKA_DEFAULT_REPLICATION
+    export KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=2
+    export KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS=3000
+fi
+
+if [ "x_\$KAFKA_CLUSTER_MODE" == "x_standalone" ]
+then
+    export KAFKA_NUM_PARTITIONS=1
+    export KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    export KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
+    export KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1
+    export KAFKA_ZOOKEEPER_CONNECT=\$(hostname):2181
+    export KAFKA_LISTENERS=PLAINTEXT://\$(hostname):9092
+fi
+
+
 if [ "x\$KAFKA_LISTENERS" != "x" ]
 then
     LISTENERS=\$(echo \$KAFKA_LISTENERS | sed 's/\//\\\\\\//g')
@@ -71,6 +90,7 @@ then
 fi
 
 
+
 sed  -i  "s/num.network.threads=3/num.network.threads=\$KAFKA_NUM_NETWORK_THREADS/g" \$CFG_FILE
 sed  -i  "s/num.io.threads=8/num.io.threads=\$KAFKA_NUM_IO_THREADS/g" \$CFG_FILE
 sed  -i  "s/num.partitions=1/num.partitions=\$KAFKA_NUM_PARTITIONS/g" \$CFG_FILE
@@ -85,7 +105,7 @@ sed  -i  "s/transaction.state.log.min.isr=1/transaction.state.log.min.isr=\$KAFK
 
 sed  -i  "s/log.retention.hours=168/log.retention.hours=\$KAFKA_LOG_RETENTION_HOURS/g" \$CFG_FILE
 sed  -i  "s/log.retention.check.interval.ms=30000/log.retention.check.interval.ms=\$KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS/g" \$CFG_FILE
-sed  -i  "s/zookeeper.connect/zookeeper.connect=\$KAFKA_ZOOKEEPER_CONNECT/g" \$CFG_FILE
+sed  -i  "s/zookeeper.connect=localhost:2181/zookeeper.connect=\$KAFKA_ZOOKEEPER_CONNECT/g" \$CFG_FILE
 sed  -i  "s/zookeeper.connection.timeout.ms=6000/zookeeper.connection.timeout.ms=\$KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT/g" \$CFG_FILE
 sed  -i  "s/group.initial.rebalance.delay.ms=0/group.initial.rebalance.delay.ms=\$KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS/g" \$CFG_FILE
 
@@ -97,6 +117,13 @@ fi
 
 
 cat \$CFG_FILE
+
+
+if [ "x_\$KAFKA_CLUSTER_MODE" == "x_standalone" ]
+then
+    /opt/kafka/bin/zookeeper-server-start.sh /opt/kafka/config/zookeeper.properties &
+fi
+
 
 /opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
 

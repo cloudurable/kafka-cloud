@@ -8,6 +8,8 @@
       "image": "cloudurable/base-java-centos:0.3",
       "commit": true,
       "changes": [
+          "ENV KAFKA_CLUSTER_MODE standalone",
+          "ENV KAFKA_DEFAULT_REPLICATION 3",
           "ENV KAFKA_BROKER_ID 1",
           "ENV KAFKA_LOG_DIRS /opt/kafka/data",
           "ENV KAFKA_PORT 9092",
@@ -27,7 +29,7 @@
           "ENV KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS 300000",
           "ENV KAFKA_ZOOKEEPER_CONNECT localhost:2181",
           "ENV KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT 6000",
-          "ENV KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS 3000",
+          "ENV KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS 0",
           "ENV KAFKA_LOG_RETENTION_BYTES ''",
           "ENTRYPOINT /opt/kafka/bin/run.sh"
 
