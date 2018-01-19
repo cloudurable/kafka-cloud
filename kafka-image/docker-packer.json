@@ -42,6 +42,11 @@
       "type": "file",
       "source": "opt/kafka",
       "destination" : "/opt/"
+    },
+    {
+      "type": "file",
+      "source": "opt/templates",
+      "destination" : "/opt/"
     }
   ],
   "post-processors": [

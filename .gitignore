@@ -1,3 +1,6 @@
 
 kafka-image/.idea/
 kafka-image/opt/
+.idea/
+kafka-cloud.iml
+
