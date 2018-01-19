@@ -41,7 +41,7 @@ fi
 if [ "x_${KAFKA_DEBUG_MODE}" == "x_true" ]
 then
     echo "SERVER PROPERTIES FILE CONTENTS START -----------"
-    cat /opt/kafka/server.properties
+    cat /opt/kafka/config/server.properties
     echo "SERVER PROPERTIES FILE CONTENTS STOP ------------"
     echo "ENV START ---------------------------------------"
     env

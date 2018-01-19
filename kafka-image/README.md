@@ -4,10 +4,6 @@
 Apache Kafka provides ...
 
 
-# How to use this image
-
-TBD
-
 ## Run
 
 Run the 9th server / broker in a cluster.
@@ -20,14 +16,6 @@ docker run  -d \
     cloudurable/kafka-image
 ```
 
-Run standalone for testing.
-
-```sh
-docker run  -d  -e KAFKA_CLUSTER_MODE=standalone \
-      -p 2181:2181 -p 9092:9092 \
-      --entrypoint=/bin/bash \
-      cloudurable/kafka-image
-```
 
 Run standalone for testing.
 
@@ -37,6 +25,14 @@ docker run  -d  -e KAFKA_CLUSTER_MODE=standalone \
       cloudurable/kafka-image
 ```
 
+Debug mode
+
+```
+docker run  -d  -e KAFKA_CLUSTER_MODE=standalone \
+        -e KAFKA_DEBUG_MODE=true \
+      --restart always --net=host \
+      cloudurable/kafka-image
+```
 
 ## Environment Variables
 
@@ -162,7 +158,7 @@ This is time consuming. We try to do it once.
 
 ## Run packer
 ```sh
-packer build packer.json
+packer build docker-packer.json
 ```
 
 ## Snoop around
@@ -181,4 +177,10 @@ docker ps -a | grep cloudurable/kafka-image | awk '{ print $1}' \
 
 docker images | grep cloudurable/kafka-image | awk '{ print $3}' \
     | xargs docker rmi -f
+```
+
+## Push another tag
+```
+$ docker tag e5acfaa662c2  cloudurable/kafka-image:0.3
+Richards-MacBook-Pro-2:kafka-image jean$ docker push  cloudurable/kafka-image:0.3
 ```
