@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 docker ps -a | grep cloudurable/kafka-image | awk '{ print $1}' \
   | xargs docker stop
 
