@@ -1,6 +1,6 @@
 {
   "variables": {
-    "docker-tag": "latest"
+    "docker-tag": "0.1"
   },
   "builders": [
     {
