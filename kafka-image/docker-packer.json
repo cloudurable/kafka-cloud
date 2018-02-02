@@ -1,6 +1,6 @@
 {
   "variables": {
-    "docker-tag": "0.1"
+    "docker-tag": "0.4"
   },
   "builders": [
     {
@@ -32,6 +32,8 @@
           "ENV KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS 0",
           "ENV KAFKA_LOG_RETENTION_BYTES ''",
           "ENV KAFKA_DEBUG_MODE 'false'",
+          "ENV KAFKA_AUTO_CREATE_TOPICS_ENABLE 'true'",
+          "ENV KAFKA_DELETE_TOPIC_ENABLE 'true'",
           "ENTRYPOINT /opt/kafka/bin/run.sh"
 
         ]
