@@ -23,6 +23,18 @@ then
     export KAFKA_LISTENERS=PLAINTEXT://$(hostname):${KAFKA_PORT}
 fi
 
+# If KAFKA_ADVERTISED_LISTENERS is blank then set KAFKA_ADVERTISED_LISTENERS_TOTAL to commented out field
+if [ "x_${KAFKA_ADVERTISED_LISTENERS}" == "x_" ]
+then
+        KAFKA_ADVERTISED_LISTENERS_TOTAL="#advertised="
+fi
+
+# If KAFKA_ADVERTISED_LISTENERS is NOT blank then set KAFKA_ADVERTISED_LISTENERS_TOTAL to advertised list
+
+if [ "x_${KAFKA_ADVERTISED_LISTENERS}" != "x_" ]
+then
+        KAFKA_ADVERTISED_LISTENERS_TOTAL="advertised=${KAFKA_ADVERTISED_LISTENERS}"
+fi
 
 export KAFKA_LOG_RETENTION_BYTES_ALL="#log.retention.bytes=1073741824"
 

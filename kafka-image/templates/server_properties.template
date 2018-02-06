@@ -1,6 +1,6 @@
 broker.id={{KAFKA_BROKER_ID}}
 listeners={{KAFKA_LISTENERS}}
-advertised={{KAFKA_ADVERTISED_LISTENERS}}
+{{KAFKA_ADVERTISED_LISTENERS_TOTAL}}
 log.dirs={{KAFKA_LOG_DIRS}}
 num.network.threads={{KAFKA_NUM_NETWORK_THREADS}}
 num.io.threads={{KAFKA_NUM_IO_THREADS}}

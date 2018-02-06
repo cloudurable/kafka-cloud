@@ -181,6 +181,6 @@ docker images | grep cloudurable/kafka-image | awk '{ print $3}' \
 
 ## Push another tag
 ```
-$ docker tag e5acfaa662c2  cloudurable/kafka-image:0.3
-Richards-MacBook-Pro-2:kafka-image jean$ docker push  cloudurable/kafka-image:0.3
+$ docker tag 1d447fd81ff8  cloudurable/kafka-image:0.5
+$ docker push  cloudurable/kafka-image:0.5
 ```
