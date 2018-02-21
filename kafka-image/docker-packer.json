@@ -9,6 +9,7 @@
       "commit": true,
       "changes": [
           "ENV KAFKA_CLUSTER_MODE standalone",
+          "ENV KAFKA_BROKER_RACK ''",
           "ENV KAFKA_DEFAULT_REPLICATION 3",
           "ENV KAFKA_BROKER_ID 1",
           "ENV KAFKA_LOG_DIRS /opt/kafka/data",
