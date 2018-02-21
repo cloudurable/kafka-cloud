@@ -23,3 +23,5 @@ zookeeper.connection.timeout.ms={{KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT}}
 group.initial.rebalance.delay.ms={{KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS}}
 auto.create.topics.enable={{KAFKA_AUTO_CREATE_TOPICS_ENABLE}}
 delete.topic.enable={{KAFKA_DELETE_TOPIC_ENABLE}}
+{{KAFKA_BROKER_RACK_ALL}}
+

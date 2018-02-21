@@ -4,6 +4,9 @@
 Apache Kafka provides ...
 
 
+* [Kafka Image Source](https://github.com/cloudurable/kafka-cloud/tree/master/kafka-image).
+
+
 ## Run
 
 Run the 9th server / broker in a cluster.
@@ -181,6 +184,6 @@ docker images | grep cloudurable/kafka-image | awk '{ print $3}' \
 
 ## Push another tag
 ```
-$ docker tag 1d447fd81ff8  cloudurable/kafka-image:0.5
-$ docker push  cloudurable/kafka-image:0.5
+$ docker tag 3e67b5405fc4  cloudurable/kafka-image:0.7
+$ docker push  cloudurable/kafka-image:0.7
 ```

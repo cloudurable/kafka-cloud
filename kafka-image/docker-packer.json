@@ -1,6 +1,6 @@
 {
   "variables": {
-    "docker-tag": "0.4"
+    "docker-tag": "0.7"
   },
   "builders": [
     {

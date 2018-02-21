@@ -10,7 +10,6 @@ then
     export KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=2
     export KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS=3000
     export KAFKA_AUTO_CREATE_TOPICS_ENABLE=false
-    export KAFKA_DELETE_TOPIC_ENABLE=false
 fi
 
 if [ "x_${KAFKA_CLUSTER_MODE}" == "x_standalone" ]
@@ -40,7 +39,12 @@ export KAFKA_LOG_RETENTION_BYTES_ALL="#log.retention.bytes=1073741824"
 
 if [ "x${KAFKA_LOG_RETENTION_BYTES}" != "x" ]
 then
-    export KAFKA_LOG_RETENTION_BYTES_ALL="log.retention.bytes${KAFKA_LOG_RETENTION_BYTES}"
+    export KAFKA_LOG_RETENTION_BYTES_ALL="log.retention.bytes=${KAFKA_LOG_RETENTION_BYTES}"
+fi
+
+if [ "x${KAFKA_BROKER_RACK}" != "x" ]
+then
+  export KAFKA_BROKER_RACK_ALL="broker.rack=${KAFKA_BROKER_RACK}"
 fi
 
 
@@ -62,6 +66,8 @@ then
     echo "ENV STOP ----------------------------------------"
 
 fi
+
+
 
 /opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
 
