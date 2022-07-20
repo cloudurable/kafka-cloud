@@ -54,7 +54,10 @@ then
     /opt/kafka/bin/zookeeper-server-start.sh /opt/kafka/config/zookeeper.properties &
 fi
 
-/opt/templates/bin/templater.sh /opt/templates/server_properties.template > /opt/kafka/config/server.properties
+mkdir -p /opt/kafka/data/config
+mkdir -p /opt/kafka/data/kafka-logs
+
+/opt/templates/bin/templater.sh /opt/templates/server_properties.template > /opt/kafka/data/config/server.properties
 
 if [ "x_${KAFKA_DEBUG_MODE}" == "x_true" ]
 then
@@ -69,5 +72,4 @@ fi
 
 
 
-/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
-
+/opt/kafka/bin/kafka-server-start.sh /opt/kafka/data/config/server.properties

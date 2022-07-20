@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 opt/kafka/bin/kafka-topics.sh --describe \
-    --zookeeper localhost:2181 \
+    --bootstrap-server kafka0:9092 \
     --topic test-topic

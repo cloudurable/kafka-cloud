@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 # http://apache.spinellicreations.com/kafka/1.0.0/kafka_2.12-1.0.0.tgz
+# https://dlcdn.apache.org/kafka/3.2.0/kafka_2.13-3.2.0.tgz
 
 set -e
-export MIRROR=http://apache.spinellicreations.com
-export VERSION=1.0.0
-export SCALA_VERSION=2.12
+export MIRROR=https://dlcdn.apache.org
+export VERSION=3.2.0
+export SCALA_VERSION=2.13
 export KAFKA_DIST="kafka_$SCALA_VERSION-$VERSION"
 
 mkdir -p opt
